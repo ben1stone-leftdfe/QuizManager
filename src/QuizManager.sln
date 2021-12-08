@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizManager.SharedKernel", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizManager.Web", "QuizManager.Web\QuizManager.Web.csproj", "{2C7A68D0-9DDF-44C8-A145-26CB35896069}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizManager.Types", "QuizManager.Types\QuizManager.Types.csproj", "{9D173F0C-2E4A-4E31-AC1D-431E163CA3B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizManager.Types", "QuizManager.Types\QuizManager.Types.csproj", "{9D173F0C-2E4A-4E31-AC1D-431E163CA3B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
