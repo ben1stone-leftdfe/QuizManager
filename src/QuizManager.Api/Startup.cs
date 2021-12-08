@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using QuizManager.Core.User;
 using QuizManager.Infrastructure.Data;
+using System.Reflection;
 
 namespace QuizManager.Api
 {
@@ -28,6 +30,8 @@ namespace QuizManager.Api
 
             services.AddIdentity<QuizManagerUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
+
+            services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
