@@ -63,7 +63,11 @@ namespace QuizManager.Api.Controllers
                 var identityUser = await _userManager.FindByNameAsync(userDto.EmailAddress);
                 var JSONWebTokenAsString = await GenerateJSONWebToken(identityUser);
 
-                return Ok(JSONWebTokenAsString);
+                return Ok(new AuthenticationResponse
+                {
+                    IsAuthenticationSuccessful = true,
+                    Token = JSONWebTokenAsString
+                });
             }
 
             return Unauthorized(userDto);

@@ -20,11 +20,11 @@ namespace QuizManager.Web.Services
             _localStorage = localStorage;
         }
 
-        public async Task<string> Login(SignInUserDto userToSignIn)
+        public async Task<AuthenticationResponse> Login(SignInUserDto userToSignIn)
         {
-            var authResponse = await _httpService.HttpPostAsync<string>("account/signin", userToSignIn);
+            var authResponse = await _httpService.HttpPostAsync<AuthenticationResponse>("account/signin", userToSignIn);
 
-            if (authResponse != null)
+            if (authResponse.IsAuthenticationSuccessful)
             {
                 await _localStorage.SetItemAsync("authToken", authResponse);
 
@@ -32,6 +32,12 @@ namespace QuizManager.Web.Services
             }
 
             return authResponse;
+        }
+        public async Task Logout()
+        {
+            await _localStorage.RemoveItemAsync("authToken");
+
+            ((AppAuthenticationStateProvider)_authStateProvider).NotifyLogout();
         }
     }
 }

@@ -49,7 +49,9 @@ namespace QuizManager.Web.Services
 
         private async Task<T> FromHttpResponseMessageAsync<T>(HttpResponseMessage response) 
         {
-            return JsonSerializer.Deserialize<T>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions
+            var content = await response.Content.ReadAsStringAsync();
+
+            return JsonSerializer.Deserialize<T>(content, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
