@@ -1,20 +1,30 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.Authorization
 
-<Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>
-    <div class="page">
-        <div class="sidebar">
-            <NavMenu />
-        </div>
-
+<CascadingValue Value="this">
+    <CascadingAuthenticationState>
+       
         <div class="main">
-            <div class="top-row px-4">
-                <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
-            </div>
+            @if (_showNavbar)
+            {
+                <NavigationBar />
+            }
 
             <div class="content px-4">
                 @Body
             </div>
         </div>
-    </div>
-</Microsoft.AspNetCore.Components.Authorization.CascadingAuthenticationState>
+    </CascadingAuthenticationState>
 
+</CascadingValue>
+
+@code
+{
+    public bool _showNavbar = false;
+
+    public void ShowNavbar(bool show)
+    {
+        _showNavbar = show;
+        StateHasChanged();
+    }
+}

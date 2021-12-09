@@ -26,7 +26,7 @@ namespace QuizManager.Web.Services
 
             if (authResponse.IsAuthenticationSuccessful)
             {
-                await _localStorage.SetItemAsync("authToken", authResponse);
+                await _localStorage.SetItemAsync("authToken", authResponse.Token);
 
                 ((AppAuthenticationStateProvider)_authStateProvider).NotifyUserAuthentication(userToSignIn.EmailAddress);
             }

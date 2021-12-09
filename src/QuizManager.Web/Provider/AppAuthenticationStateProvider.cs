@@ -51,7 +51,7 @@ namespace QuizManager.Web.Provider
 
                 return new AuthenticationState(user);
             }
-            catch (Exception e)
+            catch
             {
                 return NotAuthenticated();
             }
