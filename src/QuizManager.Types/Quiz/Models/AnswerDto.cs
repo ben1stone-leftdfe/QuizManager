@@ -1,5 +1,4 @@
-﻿using QuizManager.Core.Enitites;
-using System;
+﻿using System;
 
 namespace QuizManager.Types.Quiz.Models
 {
@@ -10,12 +9,12 @@ namespace QuizManager.Types.Quiz.Models
         public string AnswerText { get; }
         public bool IsCorrect { get; }
 
-        public AnswerDto(Answer answer)
+        public AnswerDto(Guid id, Guid questionId, string answerText, bool isCorrect)
         {
-            Id = answer.Id;
-            QuestionId = answer.QuestionId;
-            AnswerText = answer.AnswerText;
-            IsCorrect = answer.IsCorrect;
+            Id = id;
+            QuestionId = questionId;
+            AnswerText = answerText;
+            IsCorrect = isCorrect;
         }
     }
 }

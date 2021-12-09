@@ -25,6 +25,7 @@ namespace QuizManager.Web
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<AuthenticationStateProvider, AppAuthenticationStateProvider>();
             builder.Services.AddScoped<HttpService>();
+            builder.Services.AddScoped<QuizService>();
 
             await builder.Build().RunAsync();
         }

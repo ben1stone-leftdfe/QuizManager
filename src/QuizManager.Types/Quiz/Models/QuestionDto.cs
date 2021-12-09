@@ -9,13 +9,13 @@ namespace QuizManager.Types.Quiz.Models
     {
         public Guid Id { get; set; }
         public string QuestionText { get; set; }
-        public IEnumerable<AnswerDto> Answers { get; set; }
+        public List<AnswerDto> Answers { get; set; }
 
-        public QuestionDto(Question question)
+        public QuestionDto(Guid id, string questionText)
         {
-            Id = question.Id;
-            QuestionText = question.QuestionText;
-            Answers = question.Answers.Select(a => new AnswerDto(a));
+            Id = id;
+            QuestionText = questionText;
+            Answers = new List<AnswerDto>();
         }
     }
 }

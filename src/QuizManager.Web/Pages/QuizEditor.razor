@@ -1,0 +1,23 @@
+﻿@page "/edit/{quizId:guid}"
+
+<div class="container">
+    @if (Quiz != null)
+    {
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4"> @Quiz.Title </h1>
+                <p class="lead"> @Quiz.Description </p>
+            </div>
+        </div>
+
+        @foreach (var question in Quiz.Questions)
+        {
+            <QuestionComponent Question="question" />
+        }
+
+        <button class="btn btn-success" @onclick="AddQuestion"> Add question</button>
+    }
+
+</div>
+
+

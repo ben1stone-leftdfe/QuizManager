@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizManager.Web", "QuizMana
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizManager.Types", "QuizManager.Types\QuizManager.Types.csproj", "{9D173F0C-2E4A-4E31-AC1D-431E163CA3B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizManager.Web.UnitTests", "QuizManager.Web.UnitTests\QuizManager.Web.UnitTests.csproj", "{E2274A1E-8D76-4A75-ACE9-D35B77F217CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,12 +55,17 @@ Global
 		{9D173F0C-2E4A-4E31-AC1D-431E163CA3B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D173F0C-2E4A-4E31-AC1D-431E163CA3B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D173F0C-2E4A-4E31-AC1D-431E163CA3B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2274A1E-8D76-4A75-ACE9-D35B77F217CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2274A1E-8D76-4A75-ACE9-D35B77F217CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2274A1E-8D76-4A75-ACE9-D35B77F217CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2274A1E-8D76-4A75-ACE9-D35B77F217CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5B487811-926A-4970-A2F1-C22B0CE93A58} = {50CED595-BDFD-4BB4-8F95-BC5B3725F06C}
+		{E2274A1E-8D76-4A75-ACE9-D35B77F217CA} = {50CED595-BDFD-4BB4-8F95-BC5B3725F06C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA9AABDE-BE73-48E2-86DD-24579A1F063F}
