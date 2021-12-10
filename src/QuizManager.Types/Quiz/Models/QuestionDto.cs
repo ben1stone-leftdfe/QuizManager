@@ -7,6 +7,7 @@ namespace QuizManager.Types.Quiz.Models
     public class QuestionDto
     {
         public Guid Id { get; set; }
+        public Guid QuizId { get; set; }
         public int QuestionNumber { get; set; }
         public string QuestionText { get; set; }
         public List<AnswerDto> Answers { get; set; }
@@ -15,17 +16,20 @@ namespace QuizManager.Types.Quiz.Models
         {
 
         }
-        public QuestionDto(Guid id, int questionNumber, string questionText)
+
+        public QuestionDto(Guid id, Guid quizId, int questionNumber, string questionText)
         {
             Id = id;
+            QuizId = quizId;
             QuestionNumber = questionNumber;
             QuestionText = questionText;
             Answers = new List<AnswerDto>();
         }
 
-        public QuestionDto(Guid id, int questionNumber, string questionText, List<AnswerDto> answers)
+        public QuestionDto(Guid id, Guid quizId, int questionNumber, string questionText, List<AnswerDto> answers)
         {
             Id = id;
+            QuizId = quizId;
             QuestionNumber = questionNumber;
             QuestionText = questionText;
             Answers = answers;

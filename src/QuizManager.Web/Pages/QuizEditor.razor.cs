@@ -1,7 +1,6 @@
 ﻿using FluentValidation.Results;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
 using QuizManager.Types.Quiz.Commands;
 using QuizManager.Types.Quiz.Models;
 using QuizManager.Web.Components;
@@ -43,6 +42,7 @@ namespace QuizManager.Web.Pages
 
         [CascadingParameter]
         public MainLayout Layout { get; set; }
+
         public string UserRole { get; set; }
         public Guid UserId { get; set; }
 
@@ -105,6 +105,7 @@ namespace QuizManager.Web.Pages
                     }
                     else
                     {
+                        question.ContainsErrors = true;
                         await Modal.OpenModal();
                     }
                 }
@@ -142,6 +143,7 @@ namespace QuizManager.Web.Pages
                 Title = quizModel.Title,
                 Description = quizModel.Description,
                 Questions = quizModel.Questions.Select(q => new QuestionDto(q.Id,
+                    quizModel.Id,
                     q.QuestionNumber,
                     q.QuestionText,
                     q.Answers.Select(a => new AnswerDto(a.Id, q.Id, a.AnswerNumber.Number, a.AnswerText, a.IsCorrect)).ToList()
@@ -149,9 +151,10 @@ namespace QuizManager.Web.Pages
             };
         }
 
-        protected void SaveQuestionChanges(Models.Editor.Question question)
+        protected void SaveQuestionChanges(Question question)
         {
             Errors = new List<string>();
+            question.ResetError();
 
             var answerErrors = ValidateAnswers(question);
             var questionErrors = ValidateQuestion(question);
@@ -162,12 +165,13 @@ namespace QuizManager.Web.Pages
             }
             else
             {
+                question.SetError();
                 Errors.AddRange(answerErrors);
                 Errors.AddRange(questionErrors);
             } 
         }
 
-        protected async Task StartEditQuestion(Models.Editor.Question question)
+        protected async Task StartEditQuestion(Question question)
         {
             Errors = new List<string>();
 
@@ -189,17 +193,17 @@ namespace QuizManager.Web.Pages
             }
         }
 
-        private async Task DeleteQuestion(Models.Editor.Question question)
+        private async Task DeleteQuestion(Question question)
         {
             await SaveCurrentQuestion();
 
             if (Errors.Count == 0)
             {
-                Quiz.Questions.Remove(question);
+                Quiz.DeleteQuestion(question);
             }
         }
 
-        private List<string> ValidateQuestion(Models.Editor.Question question)
+        private List<string> ValidateQuestion(Question question)
         {
             var questionErrors = QuestionValidator.Validate(question);
 
@@ -221,7 +225,7 @@ namespace QuizManager.Web.Pages
             }
         }
 
-        private List<string> ValidateAnswers(Models.Editor.Question question)
+        private List<string> ValidateAnswers(Question question)
         {
             var answerErrors = new List<ValidationFailure>();
 

@@ -3,11 +3,6 @@ using FluentAssertions;
 using NUnit.Framework;
 using QuizManager.Types.Quiz.Models;
 using QuizManager.Web.Models.Editor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuizManager.Web.UnitTests.Models
 {

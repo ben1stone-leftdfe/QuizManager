@@ -10,6 +10,7 @@ namespace QuizManager.Core.Enitites
         public int QuestionNumber { get; set; }
         public string QuestionText { get; set; }
 
-        public virtual List<Answer> Answers { get; set; }
+
+        public virtual IEnumerable<Answer> Answers { get; set; }
     }
 }

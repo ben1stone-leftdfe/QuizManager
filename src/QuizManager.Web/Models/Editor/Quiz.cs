@@ -33,5 +33,17 @@ namespace QuizManager.Web.Models.Editor
 
             Questions.Add(question);
         }
+
+        public void DeleteQuestion(Question questionToDelete)
+        {
+            var index = questionToDelete.QuestionNumber - 1;
+
+            Questions.RemoveAt(index);
+
+            for (var i = index; i < Questions.Count; i++)
+            {
+                Questions[i].SetQuestionNumber(i + 1);
+            }
+        }
     }
 }

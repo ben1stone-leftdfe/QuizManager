@@ -27,13 +27,13 @@ namespace QuizManager.Api.Handlers.Queries
                                 .Include(q => q.Questions)
                                 .FirstOrDefaultAsync();
 
-            var questions = quiz.Questions.Select(q => new QuestionDto(q.Id, q.QuestionNumber, q.QuestionText)).ToList();
+            var questions = quiz.Questions.Select(q => new QuestionDto(q.Id, q.QuizId, q.QuestionNumber, q.QuestionText)).ToList();
 
             if (request.Role != UserRole.Restricted)
             {
-                foreach (var question in questions)
+                foreach (var question in questions.OrderBy(q => q.QuestionNumber))
                 {
-                    var answers = await _dbContext.Answers.Where(a => a.QuestionId == question.Id).ToListAsync();
+                    var answers = await _dbContext.Answers.Where(a => a.QuestionId == question.Id).OrderBy(a => a.AnswerNumber).ToListAsync();
 
                     question.Answers.AddRange(answers.Select(a => new AnswerDto(a.Id, a.QuestionId, a.AnswerNumber, a.AnswerText, a.IsCorrect)).ToList());
                 }

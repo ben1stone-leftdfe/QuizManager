@@ -4,7 +4,6 @@ using QuizManager.Core.Enitites;
 using QuizManager.Infrastructure.Data;
 using QuizManager.Types.Quiz.Commands;
 using QuizManager.Types.Quiz.Responses;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -45,19 +44,41 @@ namespace QuizManager.Api.Handlers.Commands
                     _dbContext.Remove(question);
                 }
 
-                var questions = dto.Questions.Select(q => new Question
+                foreach(var question in dto.Questions)
                 {
-                    QuizId = quiz.Id,
-                    QuestionText = q.QuestionText,
-                    Answers = q.Answers.Select(a => new Answer
+                    _dbContext.Questions.Add(new Question()
                     {
-                        QuestionId = q.Id,
-                        AnswerText = a.AnswerText,
-                        IsCorrect = a.IsCorrect
-                    }).ToList()
-                }).ToList();
+                        Id = question.Id,
+                        QuizId = question.QuizId,
+                        QuestionNumber = question.QuestionNumber,
+                        QuestionText = question.QuestionText
+                    });
 
-                quiz.Questions = questions;
+                    foreach (var answer in question.Answers)
+                    {
+                        _dbContext.Answers.Add(new Answer
+                        {
+                            Id = answer.Id,
+                            QuestionId = question.Id,
+                            AnswerNumber = answer.AnswerNumber,
+                            AnswerText = answer.AnswerText,
+                            IsCorrect = answer.IsCorrect
+                        });
+                    }
+                }
+                //var questions = dto.Questions.Select(q => new Question
+                //{
+                //    QuizId = quiz.Id,
+                //    QuestionNumber = q.QuestionNumber,
+                //    QuestionText = q.QuestionText,
+                //    Answers = q.Answers.Select(a => new Answer
+                //    {
+                //        QuestionId = q.Id,
+                //        AnswerNumber = a.AnswerNumber,
+                //        AnswerText = a.AnswerText,
+                //        IsCorrect = a.IsCorrect
+                //    }).ToList()
+                //}).ToList();
 
                 _dbContext.Update(quiz);
 

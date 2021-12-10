@@ -1,9 +1,7 @@
 ﻿using QuizManager.Types.Quiz.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace QuizManager.Web.Models.Editor
 {
@@ -22,6 +20,7 @@ namespace QuizManager.Web.Models.Editor
 
 
         public bool Editing = false;
+        public bool ContainsErrors = false;
 
         public Question(int questionNumber)
         {
@@ -68,6 +67,21 @@ namespace QuizManager.Web.Models.Editor
             {
                 Answers[i].SetAnswerNumber(i + 1);
             }
+        }
+
+        public void SetQuestionNumber(int number)
+        {
+            QuestionNumber = number;
+        }
+
+        public void ResetError()
+        {
+            ContainsErrors = false;
+        }
+
+        public void SetError()
+        {
+            ContainsErrors = true;
         }
     }
 }
