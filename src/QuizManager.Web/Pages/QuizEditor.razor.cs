@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
+using QuizManager.Types.Quiz.Commands;
+using QuizManager.Types.Quiz.Models;
 using QuizManager.Web.Components;
 using QuizManager.Web.Models.Editor;
 using QuizManager.Web.Services;
@@ -42,6 +44,7 @@ namespace QuizManager.Web.Pages
         [CascadingParameter]
         public MainLayout Layout { get; set; }
         public string UserRole { get; set; }
+        public Guid UserId { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -55,9 +58,9 @@ namespace QuizManager.Web.Pages
             }
 
             UserRole = GetUserRole(auth);
+            UserId = Guid.Parse(auth.User.FindFirst(c => c.Type.Contains("nameidentifier"))?.Value);
 
             var orgId = auth.User.Claims.Where(c => c.Type == ClaimTypes.Country).Select(c => c.Value).SingleOrDefault();
-
 
             var response = await QuizService.GetQuiz(Guid.Parse(orgId), QuizId, UserRole);
            
@@ -78,15 +81,72 @@ namespace QuizManager.Web.Pages
             return "Restricted";
         }
 
-        private void AddQuestion()
+        private async Task AddQuestion()
         {
-            //foreach (var question )
-            Quiz.AddQuestion();
+            await SaveCurrentQuestion();
+
+            if (Errors.Count == 0)
+            {
+                Quiz.AddQuestion();
+            }
+            
+        }
+
+        private async Task SaveCurrentQuestion()
+        {
+            foreach (var question in Quiz.Questions)
+            {
+                if (question.Editing == true)
+                {
+                    SaveQuestionChanges(question);
+
+                    if (Errors.Count == 0)
+                    {
+                        question.Editing = false;
+                    }
+                    else
+                    {
+                        await Modal.OpenModal();
+                    }
+                }
+            }
         }
 
         protected async Task HandleSubmit()
         {
-           
+            await SaveCurrentQuestion();
+
+            if (Errors.Count == 0)
+            {
+                var quizDto = MapModelToDto(Quiz);
+
+                var command = new UpdateQuizCommand
+                {
+                    UserId = UserId,
+                    QuizDto = quizDto
+                };
+
+                var response = await QuizService.UpdateQuiz(command);
+
+                if (response.Success)
+                {
+                    await Task.Delay(1);
+                }
+            }
+        }
+
+        private QuizDto MapModelToDto(Quiz quizModel)
+        {
+            return new QuizDto
+            {
+                Id = quizModel.Id,
+                Title = quizModel.Title,
+                Description = quizModel.Description,
+                Questions = quizModel.Questions.Select(q => new QuestionDto(q.Id,
+                    q.QuestionText,
+                    q.Answers.Select(a => new AnswerDto(a.Id, q.Id, a.AnswerText, a.IsCorrect)).ToList()
+                )).ToList()
+            };
         }
 
         protected void SaveQuestionChanges(Question question)
@@ -129,9 +189,14 @@ namespace QuizManager.Web.Pages
             }
         }
 
-        private void DeleteQuestion(Question question)
+        private async Task DeleteQuestion(Question question)
         {
-            Quiz.Questions.Remove(question);
+            await SaveCurrentQuestion();
+
+            if (Errors.Count == 0)
+            {
+                Quiz.Questions.Remove(question);
+            }
         }
 
         private List<string> ValidateQuestion(Question question)
@@ -154,10 +219,6 @@ namespace QuizManager.Web.Pages
             {
                 answer.Editing = false;
             }
-            //else
-            //{
-            //    answerErrors.AddRange(result.Errors);
-            //}
         }
 
         private List<string> ValidateAnswers(Question question)

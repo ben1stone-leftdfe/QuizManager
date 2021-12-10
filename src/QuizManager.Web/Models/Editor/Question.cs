@@ -26,6 +26,7 @@ namespace QuizManager.Web.Models.Editor
         public Question()
         {
             Id = Guid.NewGuid();
+            Editing = true;
             QuestionText = "New question";
             Answers = new List<Answer>();
         }
@@ -35,6 +36,14 @@ namespace QuizManager.Web.Models.Editor
             Id = dto.Id;
             QuestionText = dto.QuestionText;
             Answers = dto.Answers.Select(a => new Answer(a)).ToList();
+        }
+
+        public void AddStartingAnswers()
+        {
+            for (var i = 0; i < MIN_ANSWERS; i++)
+            {
+                Answers.Add(new Answer(Id));
+            }
         }
 
         public void AddAnswer()

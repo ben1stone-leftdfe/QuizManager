@@ -11,11 +11,22 @@ namespace QuizManager.Types.Quiz.Models
         public string QuestionText { get; set; }
         public List<AnswerDto> Answers { get; set; }
 
+        public QuestionDto()
+        {
+
+        }
         public QuestionDto(Guid id, string questionText)
         {
             Id = id;
             QuestionText = questionText;
             Answers = new List<AnswerDto>();
+        }
+
+        public QuestionDto(Guid id, string questionText, List<AnswerDto> answers)
+        {
+            Id = id;
+            QuestionText = questionText;
+            Answers = answers;
         }
     }
 }

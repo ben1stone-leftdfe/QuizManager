@@ -35,5 +35,10 @@ namespace QuizManager.Web.Services
         {
             return await _httpService.HttpPostAsync<DeleteQuizResponse>("quiz/delete", command);
         }
+
+        public async Task<UpdateQuizResponse> UpdateQuiz(UpdateQuizCommand command)
+        {
+            return await _httpService.HttpPostAsync<UpdateQuizResponse>("quiz/update", command);
+        }
     }
 }

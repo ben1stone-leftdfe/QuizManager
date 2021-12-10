@@ -54,10 +54,8 @@ namespace QuizManager.Api.Controllers
 
         [HttpPost("delete")]
         public async Task<IActionResult> DeleteQuiz(DeleteQuizCommand command)
-        { 
-            var user = await _userManager.FindByIdAsync(command.UserId.ToString());
-
-            var isEditor = await _userManager.IsInRoleAsync(user, UserRole.Editor);
+        {
+            var isEditor = await IsEditor(command.UserId);
 
             if (isEditor == false)
             {
@@ -72,6 +70,35 @@ namespace QuizManager.Api.Controllers
             }
 
             return Ok(result);
+        }
+
+        [HttpPost("update")]
+        public async Task<IActionResult> UpdateQuiz(UpdateQuizCommand command)
+        {
+            var isEditor = await IsEditor(command.UserId);
+
+            if (isEditor == false)
+            {
+                return Unauthorized(new DeleteQuizResponse { Success = false });
+            }
+
+            var result = await _mediator.Send(command);
+
+            if (result.Success == false)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
+
+        [NonAction]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        private async Task<bool> IsEditor(Guid userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            return await _userManager.IsInRoleAsync(user, UserRole.Editor);
         }
     }
 }

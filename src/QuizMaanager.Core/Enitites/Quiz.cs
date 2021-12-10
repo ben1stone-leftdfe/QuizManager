@@ -22,5 +22,6 @@ namespace QuizManager.Core.Enitites
         }
 
         public virtual IEnumerable<Question> Questions { get; set; }
+
     }
 }

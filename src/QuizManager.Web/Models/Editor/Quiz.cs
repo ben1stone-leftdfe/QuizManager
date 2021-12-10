@@ -23,7 +23,13 @@ namespace QuizManager.Web.Models.Editor
             Questions = dto.Questions.Select(q => new Question(q)).ToList();
         }
 
-        public void AddQuestion() => Questions.Add(new Question());
+        public void AddQuestion()
+        {
+            var question = new Question();
 
+            question.AddStartingAnswers();
+
+            Questions.Add(question);
+        }
     }
 }
