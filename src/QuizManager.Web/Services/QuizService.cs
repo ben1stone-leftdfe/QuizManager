@@ -1,4 +1,5 @@
-﻿using QuizManager.Types.Quiz.Models;
+﻿using QuizManager.Types.Quiz.Commands;
+using QuizManager.Types.Quiz.Models;
 using QuizManager.Types.Quiz.Responses;
 using QuizManager.Web.Interfaces;
 using System;
@@ -23,6 +24,11 @@ namespace QuizManager.Web.Services
         public async Task<QuizDto> GetQuiz(Guid organisationId, Guid quizId)
         {
             return await _httpService.HttpGetAsync<QuizDto>($"quiz/{organisationId}/quiz/{quizId}");
+        }
+
+        public async Task<CreateQuizResponse> CreateQuiz(CreateQuizCommand command)
+        {
+            return await _httpService.HttpPostAsync<CreateQuizResponse>("quiz/create", command);
         }
     }
 }

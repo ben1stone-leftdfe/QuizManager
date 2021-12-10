@@ -9,15 +9,20 @@ namespace QuizManager.Web.Models.Editor
 {
     public class Question
     {
+        private int MIN_ANSWERS = 3;
+        private int MAX_ANSWERS = 5;
+
+        public bool AddAnswersDisabled => Answers.Count >= MAX_ANSWERS;
+
         public Guid Id { get; set; }
 
-        [Required]
         public string QuestionText { get; set; }
 
-        [ValidateComplexType]
         public List<Answer> Answers { get; set; }
 
-      
+
+        public bool Editing = false;
+
         public Question()
         {
             Id = Guid.NewGuid();

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using QuizManager.Web.Interfaces;
 using QuizManager.Web.Provider;
 using QuizManager.Web.Services;
+using QuizManager.Web.Validation;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -26,6 +27,9 @@ namespace QuizManager.Web
             builder.Services.AddScoped<AuthenticationStateProvider, AppAuthenticationStateProvider>();
             builder.Services.AddScoped<HttpService>();
             builder.Services.AddScoped<QuizService>();
+
+            builder.Services.AddScoped<QuestionValidator>();
+            builder.Services.AddScoped<AnswerValidator>();
 
             await builder.Build().RunAsync();
         }

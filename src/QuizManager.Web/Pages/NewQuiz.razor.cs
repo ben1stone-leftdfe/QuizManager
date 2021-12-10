@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using QuizManager.Types.Quiz.Commands;
 using QuizManager.Types.Quiz.Models;
 using QuizManager.Web.Services;
 using QuizManager.Web.Shared;
@@ -11,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace QuizManager.Web.Pages
 {
-    public partial class Index
+    public partial class NewQuiz
     {
         [Inject]
         public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
-       
+
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
@@ -25,7 +26,7 @@ namespace QuizManager.Web.Pages
         [CascadingParameter]
         public MainLayout Layout { get; set; }
 
-        public List<QuizOverviewDto> Quizzes { get; set; } = new List<QuizOverviewDto>();
+        public NewQuizDto NewQuizDto { get; set; } = new NewQuizDto();
 
         protected override async Task OnInitializedAsync()
         {
@@ -39,10 +40,28 @@ namespace QuizManager.Web.Pages
             }
 
             var orgId = auth.User.Claims.Where(c => c.Type == ClaimTypes.Country).Select(c => c.Value).SingleOrDefault();
+            var userId = auth.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
 
-            var response = await QuizService.GetQuizzes(Guid.Parse(orgId));
+            NewQuizDto.AuthorId = Guid.Parse(userId);
+            NewQuizDto.OrganisationId = Guid.Parse(orgId);
+        }
 
-            Quizzes = response.Quizzes.ToList();
+        public async Task SendCreateNewQuiz()
+        {
+            var command = new CreateQuizCommand
+            {
+                AuthorId = NewQuizDto.AuthorId,
+                OrganisationId = NewQuizDto.OrganisationId,
+                Title = NewQuizDto.Title,
+                Description = NewQuizDto.Description
+            };
+
+            var response = await QuizService.CreateQuiz(command);
+
+            if (response != null)
+            {
+                NavigationManager.NavigateTo($"/edit/{response.Id}");
+            }
         }
     }
 }

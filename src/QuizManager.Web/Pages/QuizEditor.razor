@@ -3,21 +3,109 @@
 <div class="container">
     @if (Quiz != null)
     {
-        <div class="jumbotron jumbotron-fluid">
-            <div class="container">
-                <h1 class="display-4"> @Quiz.Title </h1>
-                <p class="lead"> @Quiz.Description </p>
+        <EditForm Model="Quiz" OnSubmit="HandleSubmit" >
+
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-4"> @Quiz.Title </h1>
+                    <p class="lead"> @Quiz.Description </p>
+                </div>
             </div>
-        </div>
 
-        @foreach (var question in Quiz.Questions)
-        {
-            <QuestionComponent Question="question" />
-        }
+            @foreach (var question in Quiz.Questions)
+            {
+                if (question.Editing)
+                {
+                    @foreach (var error in Errors)
+                    {
+                        <p> @error </p>
+                    }
+                }
+                
+                <div class="card bg-light @(question.Editing ? "": "bg-light")">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-10">
+                                @if (question.Editing == false)
+                                {
+                                    <span class="align-middle"> @question.QuestionText </span>
+                                }
+                                else
+                                {
+                                    <InputText id="text" class="form-control" @bind-Value="question.QuestionText" />
+                                }
 
-        <button class="btn btn-success" @onclick="AddQuestion"> Add question</button>
+                            </div>
+                            <div class="col-2 align-middle text-right">
+                                @if (question.Editing == false)
+                                {
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-secondary" @onclick="() => StartEditQuestion(question)"> Edit </button>
+                                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteQuestion(question)"> Delete</button>
+                                    </div>
+                                    
+                                }
+                                else
+                                {
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-success" @onclick="() => SaveQuestionChanges(question)"> Save </button>
+                                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteQuestion(question)"> Delete</button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <ul class="list-group list-group-flush">
+                        @foreach (var answer in question.Answers)
+                        {
+                            <li class="list-group-item">
+                                <strong> A. </strong>
+
+                                <span>
+                                    @if (answer.Editing)
+                                    {
+                                        <InputText id="text" class="form-control" @bind-Value="answer.AnswerText" />
+                                       
+                                        <button class="btn btn-success btn-sm" @onclick="() => SaveAnswer(answer)"> Save </button>
+                                    }
+                                    else
+                                    {
+                                        @answer.AnswerText
+                                        
+                                        @if (question.Editing)
+                                        {
+                                            <button class="btn btn-secondary btn-sm" @onclick="() => EditAnswer(answer)"> Edit </button>
+                                        }
+                                        
+                                    }
+                                </span>
+                            </li>
+                        }
+
+                        @if (question.Editing)
+                        {
+                            <li class="list-group-item text-center">
+                                <div class="btn btn-success btn-sm" @onclick="question.AddAnswer" disabled="@(question.AddAnswersDisabled)"> + </div>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+
+                <br />
+            }
+
+            
+
+            <button class="btn btn-success" @onclick="AddQuestion"> Add question</button>
+        </EditForm>
     }
 
 </div>
 
+<ModalComponent @ref="Modal">
+    <Title> Error </Title>
+</ModalComponent>
 

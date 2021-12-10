@@ -8,9 +8,9 @@ namespace QuizManager.Web.Models.Editor
     {
         public Guid Id { get; }
         public Guid QuestionId { get; }
-        [Required]
         public string AnswerText { get; set; }
         public bool IsCorrect { get; }
+        public bool Editing = false;
 
         public Answer(Guid questionId)
         {
@@ -18,6 +18,7 @@ namespace QuizManager.Web.Models.Editor
             QuestionId = questionId;
             AnswerText = "";
             IsCorrect = false;
+            Editing = true;
         }
 
         public Answer(AnswerDto dto)
@@ -27,5 +28,6 @@ namespace QuizManager.Web.Models.Editor
             AnswerText = dto.AnswerText;
             IsCorrect = dto.IsCorrect;
         }
+
     }
 }

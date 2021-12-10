@@ -1,0 +1,28 @@
+﻿
+@page "/new-quiz"
+
+<p>@NewQuizDto.AuthorId</p>
+<p>@NewQuizDto.OrganisationId</p>
+
+<EditForm Model="NewQuizDto" OnValidSubmit="SendCreateNewQuiz">
+
+    <DataAnnotationsValidator />
+
+    <div class="form-group row">
+        <label for="email" class="col-form-label"> Title </label>
+        <div>
+            <InputText id="email" class="form-control" @bind-Value="NewQuizDto.Title" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="password" class="col-form-label"> Description </label>
+        <div>
+            <InputText id="password" class="form-control" @bind-Value="NewQuizDto.Description" />
+        </div>
+    </div>
+
+    <div class="row">
+        <button type="submit"> Create</button>
+    </div>
+</EditForm>

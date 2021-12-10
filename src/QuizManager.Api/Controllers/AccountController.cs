@@ -86,6 +86,7 @@ namespace QuizManager.Api.Controllers
                 new Claim(JwtRegisteredClaimNames.Sub, identityUser.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, identityUser.Id),
+                new Claim(ClaimTypes.Country, identityUser.OrganisationId.ToString())
             };
 
             var roleNames = await _userManager.GetRolesAsync(identityUser);

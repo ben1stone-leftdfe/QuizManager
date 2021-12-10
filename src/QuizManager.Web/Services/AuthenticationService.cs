@@ -27,7 +27,7 @@ namespace QuizManager.Web.Services
             if (authResponse.IsAuthenticationSuccessful)
             {
                 await _localStorage.SetItemAsync("authToken", authResponse.Token);
-
+                
                 ((AppAuthenticationStateProvider)_authStateProvider).NotifyUserAuthentication(userToSignIn.EmailAddress);
             }
 
@@ -36,7 +36,6 @@ namespace QuizManager.Web.Services
         public async Task Logout()
         {
             await _localStorage.RemoveItemAsync("authToken");
-
             ((AppAuthenticationStateProvider)_authStateProvider).NotifyLogout();
         }
     }

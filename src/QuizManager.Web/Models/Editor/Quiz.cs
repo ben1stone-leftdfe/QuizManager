@@ -24,5 +24,6 @@ namespace QuizManager.Web.Models.Editor
         }
 
         public void AddQuestion() => Questions.Add(new Question());
+
     }
 }
