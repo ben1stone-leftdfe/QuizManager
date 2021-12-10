@@ -18,12 +18,14 @@ namespace QuizManager.Web.Components
 
         public string Display = "none";
         public string Class = "";
+
         public List<string> Errors { get; set; }
 
         public void SetErrors(List<string> errors)
         {
             Errors = errors;
         }
+
         public async Task OpenModal()
         {
             Display = "block;";

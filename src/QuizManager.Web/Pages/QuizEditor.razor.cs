@@ -1,13 +1,16 @@
 ﻿using FluentValidation.Results;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using QuizManager.Web.Components;
 using QuizManager.Web.Models.Editor;
 using QuizManager.Web.Services;
+using QuizManager.Web.Shared;
 using QuizManager.Web.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace QuizManager.Web.Pages
@@ -17,6 +20,11 @@ namespace QuizManager.Web.Pages
         [Parameter]
         public Guid QuizId { get; set; }
 
+        [Inject]
+        public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
         [Inject]
         public QuizService QuizService { get; set; }
 
@@ -31,14 +39,45 @@ namespace QuizManager.Web.Pages
         public List<string> Errors = new List<string>();
         public ModalComponent Modal { get; set; } = new ModalComponent();
 
+        [CascadingParameter]
+        public MainLayout Layout { get; set; }
+        public string UserRole { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
+            Layout.ShowNavbar(true);
 
-            var response = await QuizService.GetQuiz(Guid.Parse("8A8E7363-F9D7-484D-A838-BD39B02ED878"), QuizId);
+            var auth = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+            if (auth.User.Identity.IsAuthenticated == false)
+            {
+                NavigationManager.NavigateTo("/login");
+            }
+
+            UserRole = GetUserRole(auth);
+
+            var orgId = auth.User.Claims.Where(c => c.Type == ClaimTypes.Country).Select(c => c.Value).SingleOrDefault();
+
+
+            var response = await QuizService.GetQuiz(Guid.Parse(orgId), QuizId, UserRole);
            
             Quiz = new Quiz(response);
         }
- 
+
+        private string GetUserRole(AuthenticationState auth)
+        {
+            if (auth.User.IsInRole("Editor"))
+            {
+                return "Editor";
+            }
+            else if (auth.User.IsInRole("Viewer"))
+            {
+                return "Viewer";
+            }
+
+            return "Restricted";
+        }
+
         private void AddQuestion()
         {
             //foreach (var question )

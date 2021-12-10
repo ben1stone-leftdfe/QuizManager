@@ -1,8 +1,8 @@
 ﻿@page "/"
 
-<h1>My quizzes</h1>
+<h1> My quizzes </h1>
 
 @foreach (var quiz in Quizzes)
 {
-    <QuizOverview Quiz="quiz" />
+    <QuizOverview Quiz="quiz" UserRole="@UserRole" UserId="@UserId" DeleteQuiz="@((args) => DeleteQuiz((Guid)args))"/>
 }

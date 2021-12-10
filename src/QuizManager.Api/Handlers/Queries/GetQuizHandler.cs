@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using QuizManager.Core.Enitites;
 using QuizManager.Infrastructure.Data;
+using QuizManager.Shared;
 using QuizManager.Types.Quiz.Models;
 using QuizManager.Types.Quiz.Queries;
 using System.Collections.Generic;
@@ -28,13 +29,16 @@ namespace QuizManager.Api.Handlers.Queries
 
             var questions = quiz.Questions.Select(q => new QuestionDto(q.Id, q.QuestionText)).ToList();
 
-            foreach (var question in questions)
+            if (request.Role != UserRole.Restricted)
             {
-                var answers = await _dbContext.Answers.Where(a => a.QuestionId == question.Id).ToListAsync();
+                foreach (var question in questions)
+                {
+                    var answers = await _dbContext.Answers.Where(a => a.QuestionId == question.Id).ToListAsync();
 
-                question.Answers.AddRange(answers.Select(a => new AnswerDto(a.Id, a.QuestionId, a.AnswerText, a.IsCorrect)).ToList());
+                    question.Answers.AddRange(answers.Select(a => new AnswerDto(a.Id, a.QuestionId, a.AnswerText, a.IsCorrect)).ToList());
+                }
             }
-
+            
             return new QuizDto
             {
                 Id = quiz.Id,

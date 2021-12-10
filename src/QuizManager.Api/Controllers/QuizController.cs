@@ -1,7 +1,11 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using QuizManager.Core.User;
+using QuizManager.Shared;
 using QuizManager.Types.Quiz.Commands;
 using QuizManager.Types.Quiz.Queries;
+using QuizManager.Types.Quiz.Responses;
 using System;
 using System.Threading.Tasks;
 
@@ -12,10 +16,12 @@ namespace QuizManager.Api.Controllers
     public class QuizController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly UserManager<QuizManagerUser> _userManager;
 
-        public QuizController(IMediator mediator)
+        public QuizController(IMediator mediator, UserManager<QuizManagerUser> userManager)
         {
             _mediator = mediator;
+            _userManager = userManager;
         }
 
         [HttpGet("{organisationId}")]
@@ -28,10 +34,10 @@ namespace QuizManager.Api.Controllers
             return Ok(quizzes);
         }
 
-        [HttpGet("{organisationId}/quiz/{quizId}")]
-        public async Task<IActionResult> GetQuiz(Guid organisationId, Guid quizId)
+        [HttpGet("{organisationId}/quiz/{quizId}/{role}")]
+        public async Task<IActionResult> GetQuiz(Guid organisationId, Guid quizId, string role)
         {
-            var query = new GetQuizQuery(organisationId, quizId);
+            var query = new GetQuizQuery(organisationId, quizId, role);
 
             var quiz = await _mediator.Send(query);
 
@@ -42,6 +48,28 @@ namespace QuizManager.Api.Controllers
         public async Task<IActionResult> CreateQuiz(CreateQuizCommand command)
         {
             var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [HttpPost("delete")]
+        public async Task<IActionResult> DeleteQuiz(DeleteQuizCommand command)
+        { 
+            var user = await _userManager.FindByIdAsync(command.UserId.ToString());
+
+            var isEditor = await _userManager.IsInRoleAsync(user, UserRole.Editor);
+
+            if (isEditor == false)
+            {
+                return Unauthorized(new DeleteQuizResponse { Success = false });
+            }
+
+            var result = await _mediator.Send(command);
+
+            if (result.Success == false)
+            {
+                return BadRequest(result);
+            }
 
             return Ok(result);
         }

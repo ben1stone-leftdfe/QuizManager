@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QuizManager.SharedKernel\QuizManager.SharedKernel.csproj" />
+    <ProjectReference Include="..\QuizManager.SharedKernel\QuizManager.Shared.csproj" />
   </ItemGroup>
 
 </Project>

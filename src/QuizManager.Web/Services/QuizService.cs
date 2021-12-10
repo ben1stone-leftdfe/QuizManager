@@ -21,14 +21,19 @@ namespace QuizManager.Web.Services
             return await _httpService.HttpGetAsync<GetQuizzesResponse>($"quiz/{organisationId}");
         }
 
-        public async Task<QuizDto> GetQuiz(Guid organisationId, Guid quizId)
+        public async Task<QuizDto> GetQuiz(Guid organisationId, Guid quizId, string role)
         {
-            return await _httpService.HttpGetAsync<QuizDto>($"quiz/{organisationId}/quiz/{quizId}");
+            return await _httpService.HttpGetAsync<QuizDto>($"quiz/{organisationId}/quiz/{quizId}/{role}");
         }
 
         public async Task<CreateQuizResponse> CreateQuiz(CreateQuizCommand command)
         {
             return await _httpService.HttpPostAsync<CreateQuizResponse>("quiz/create", command);
+        }
+
+        public async Task<DeleteQuizResponse> DeleteQuiz(DeleteQuizCommand command)
+        {
+            return await _httpService.HttpPostAsync<DeleteQuizResponse>("quiz/delete", command);
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using QuizManager.Core.Enitites;
 using QuizManager.Core.User;
+using QuizManager.Infrastructure.Data.Configuration;
 
 namespace QuizManager.Infrastructure.Data
 {
@@ -10,6 +11,13 @@ namespace QuizManager.Infrastructure.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new RoleConfiguration());
         }
 
         public DbSet<Organisation> Organisations { get; set; }

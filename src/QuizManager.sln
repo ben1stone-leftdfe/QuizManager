@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizManager.Api.UnitTests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizManager.Infrastructure", "QuizManager.Infrastructure\QuizManager.Infrastructure.csproj", "{F864AA81-0867-42F3-934F-97F1A25A063A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizManager.SharedKernel", "QuizManager.SharedKernel\QuizManager.SharedKernel.csproj", "{A175C7D2-A314-4847-B0BA-7216A77B1DD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizManager.Shared", "QuizManager.SharedKernel\QuizManager.Shared.csproj", "{A175C7D2-A314-4847-B0BA-7216A77B1DD6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizManager.Web", "QuizManager.Web\QuizManager.Web.csproj", "{2C7A68D0-9DDF-44C8-A145-26CB35896069}"
 EndProject

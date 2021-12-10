@@ -9,7 +9,6 @@ namespace QuizManager.Types.Quiz.Models
         public Guid AuthorId { get; }
         public string Title { get; }
         public string Description { get; }
-
         public QuizOverviewDto(Guid id, Guid organisationId, Guid authorId, string title, string description)
         {
             Id = id;

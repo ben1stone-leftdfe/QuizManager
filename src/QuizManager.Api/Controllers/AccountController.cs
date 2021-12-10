@@ -57,7 +57,7 @@ namespace QuizManager.Api.Controllers
         public async Task<IActionResult> SignIn([FromBody] SignInUserDto userDto)
         {
             var signInResult = await _signInManager.PasswordSignInAsync(userDto.EmailAddress, userDto.Password, false, false);
-
+            
             if (signInResult.Succeeded)
             {
                 var identityUser = await _userManager.FindByNameAsync(userDto.EmailAddress);
