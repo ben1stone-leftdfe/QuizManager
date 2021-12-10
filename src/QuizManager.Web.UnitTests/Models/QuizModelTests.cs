@@ -46,6 +46,5 @@ namespace QuizManager.Web.UnitTests.Models
 
             quiz.Questions.Count.Should().Be(startingQuestionCount + 1);
         }
-
     }
 }

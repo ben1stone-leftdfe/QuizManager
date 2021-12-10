@@ -25,7 +25,9 @@ namespace QuizManager.Web.Models.Editor
 
         public void AddQuestion()
         {
-            var question = new Question();
+            var currentQuestionCount = Questions.Count;
+
+            var question = new Question(currentQuestionCount + 1);
 
             question.AddStartingAnswers();
 

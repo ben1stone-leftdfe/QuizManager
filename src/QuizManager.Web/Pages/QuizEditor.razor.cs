@@ -89,7 +89,6 @@ namespace QuizManager.Web.Pages
             {
                 Quiz.AddQuestion();
             }
-            
         }
 
         private async Task SaveCurrentQuestion()
@@ -143,13 +142,14 @@ namespace QuizManager.Web.Pages
                 Title = quizModel.Title,
                 Description = quizModel.Description,
                 Questions = quizModel.Questions.Select(q => new QuestionDto(q.Id,
+                    q.QuestionNumber,
                     q.QuestionText,
-                    q.Answers.Select(a => new AnswerDto(a.Id, q.Id, a.AnswerText, a.IsCorrect)).ToList()
+                    q.Answers.Select(a => new AnswerDto(a.Id, q.Id, a.AnswerNumber.Number, a.AnswerText, a.IsCorrect)).ToList()
                 )).ToList()
             };
         }
 
-        protected void SaveQuestionChanges(Question question)
+        protected void SaveQuestionChanges(Models.Editor.Question question)
         {
             Errors = new List<string>();
 
@@ -167,7 +167,7 @@ namespace QuizManager.Web.Pages
             } 
         }
 
-        protected async Task StartEditQuestion(Question question)
+        protected async Task StartEditQuestion(Models.Editor.Question question)
         {
             Errors = new List<string>();
 
@@ -189,7 +189,7 @@ namespace QuizManager.Web.Pages
             }
         }
 
-        private async Task DeleteQuestion(Question question)
+        private async Task DeleteQuestion(Models.Editor.Question question)
         {
             await SaveCurrentQuestion();
 
@@ -199,7 +199,7 @@ namespace QuizManager.Web.Pages
             }
         }
 
-        private List<string> ValidateQuestion(Question question)
+        private List<string> ValidateQuestion(Models.Editor.Question question)
         {
             var questionErrors = QuestionValidator.Validate(question);
 
@@ -221,7 +221,7 @@ namespace QuizManager.Web.Pages
             }
         }
 
-        private List<string> ValidateAnswers(Question question)
+        private List<string> ValidateAnswers(Models.Editor.Question question)
         {
             var answerErrors = new List<ValidationFailure>();
 

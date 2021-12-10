@@ -1,6 +1,5 @@
 ﻿using QuizManager.Types.Quiz.Models;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace QuizManager.Web.Models.Editor
 {
@@ -8,14 +7,16 @@ namespace QuizManager.Web.Models.Editor
     {
         public Guid Id { get; }
         public Guid QuestionId { get; }
+        public AnswerNumber AnswerNumber { get; set; }
         public string AnswerText { get; set; }
         public bool IsCorrect { get; }
         public bool Editing = false;
 
-        public Answer(Guid questionId)
+        public Answer(Guid questionId, int answerNumber)
         {
             Id = Guid.NewGuid();
             QuestionId = questionId;
+            AnswerNumber = new AnswerNumber(answerNumber);
             AnswerText = "";
             IsCorrect = false;
             Editing = true;
@@ -25,9 +26,14 @@ namespace QuizManager.Web.Models.Editor
         {
             Id = dto.Id;
             QuestionId = dto.QuestionId;
+            AnswerNumber = new AnswerNumber(dto.AnswerNumber);
             AnswerText = dto.AnswerText;
             IsCorrect = dto.IsCorrect;
         }
 
+        public void SetAnswerNumber(int number)
+        {
+            AnswerNumber = new AnswerNumber(number);
+        }
     }
 }
