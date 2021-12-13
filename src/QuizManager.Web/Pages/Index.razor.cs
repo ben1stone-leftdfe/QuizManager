@@ -35,10 +35,12 @@ namespace QuizManager.Web.Pages
 
             var auth = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
-            Layout.SetUserData(auth);
+            
 
             if (auth.User.Identity.IsAuthenticated == true)
             {
+                Layout.SetUserData(auth);
+
                 // Imaginary API call to get organisation data 
 
                 // Pass organisation data back to the layout to show theme on each page
