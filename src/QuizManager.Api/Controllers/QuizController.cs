@@ -98,7 +98,7 @@ namespace QuizManager.Api.Controllers
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
 
-            return await _userManager.IsInRoleAsync(user, UserRole.Editor);
+            return await _userManager.IsInRoleAsync(user, UserRoles.Editor);
         }
     }
 }

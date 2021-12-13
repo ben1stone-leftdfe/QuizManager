@@ -17,18 +17,18 @@ namespace QuizManager.Infrastructure.Data.Configuration
             builder.HasData(
                 new IdentityRole
                 {
-                    Name = UserRole.Editor,
-                    NormalizedName = UserRole.Editor.ToUpper()
+                    Name = UserRoles.Editor,
+                    NormalizedName = UserRoles.Editor.ToUpper()
                 },
                 new IdentityRole
                 {
-                    Name = UserRole.Viewer,
-                    NormalizedName = UserRole.Viewer.ToUpper()
+                    Name = UserRoles.Viewer,
+                    NormalizedName = UserRoles.Viewer.ToUpper()
                 },
                 new IdentityRole
                 {
-                    Name = UserRole.Restricted,
-                    NormalizedName = UserRole.Restricted.ToUpper()
+                    Name = UserRoles.Restricted,
+                    NormalizedName = UserRoles.Restricted.ToUpper()
                 }
             ); 
         }

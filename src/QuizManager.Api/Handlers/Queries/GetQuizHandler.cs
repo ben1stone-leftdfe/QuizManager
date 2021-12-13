@@ -29,7 +29,7 @@ namespace QuizManager.Api.Handlers.Queries
 
             var questions = quiz.Questions.Select(q => new QuestionDto(q.Id, q.QuizId, q.QuestionNumber, q.QuestionText)).ToList();
 
-            if (request.Role != UserRole.Restricted)
+            if (request.Role != UserRoles.Restricted)
             {
                 foreach (var question in questions.OrderBy(q => q.QuestionNumber))
                 {

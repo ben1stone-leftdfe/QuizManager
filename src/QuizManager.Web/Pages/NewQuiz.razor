@@ -1,28 +1,29 @@
-﻿
+﻿@using QuizManager.Shared
 @page "/new-quiz"
 
-<p>@NewQuizDto.AuthorId</p>
-<p>@NewQuizDto.OrganisationId</p>
+<div class="container">
+    <h1> Create new quiz </h1>
 
-<EditForm Model="NewQuizDto" OnValidSubmit="SendCreateNewQuiz">
+    <EditForm Model="NewQuizDto" OnValidSubmit="SendCreateNewQuiz">
 
-    <DataAnnotationsValidator />
+        <DataAnnotationsValidator />
 
-    <div class="form-group row">
-        <label for="email" class="col-form-label"> Title </label>
-        <div>
-            <InputText id="email" class="form-control" @bind-Value="NewQuizDto.Title" />
+        <div class="form-group">
+            <label for="title"> Title </label>
+            <div>
+                <InputText id="title" class="form-control" @bind-Value="NewQuizDto.Title" />
+            </div>
         </div>
-    </div>
 
-    <div class="form-group row">
-        <label for="password" class="col-form-label"> Description </label>
-        <div>
-            <InputText id="password" class="form-control" @bind-Value="NewQuizDto.Description" />
+        <div class="form-group">
+            <label for="description"> Description </label>
+            <div>
+                <InputText id="description" class="form-control" @bind-Value="NewQuizDto.Description" />
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <button type="submit"> Create</button>
-    </div>
-</EditForm>
+        <div class="row justify-content-center">
+            <button class="btn btn-success" type="submit"> Create</button>
+        </div>
+    </EditForm>
+</div>

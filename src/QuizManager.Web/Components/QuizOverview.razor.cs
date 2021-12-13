@@ -15,27 +15,26 @@ namespace QuizManager.Web.Components
 
         [Parameter]
         public string UserRole { get; set; }
-        [Parameter]
-        public Guid UserId { get; set; }
-
-        [Inject]
-        public QuizService QuizService { get; set; }
-
-        public ModalComponent Modal { get; set; } = new ModalComponent();
-
-        public async Task TriggerDeleteWarning(QuizOverviewDto quiz)
-        {
-            await Modal.OpenModal();
-        }
 
         [Parameter]
         public EventCallback DeleteQuiz { get; set; }
 
-        public async Task TriggerDeleteQuiz()
+        public ModalComponent Modal { get; set; } = new ModalComponent();
+
+        public void TriggerDeleteWarning()
         {
-            await DeleteQuiz.InvokeAsync(Quiz.Id);
-            await Modal.CloseModal();
-            StateHasChanged();
+            Modal.OpenModal();
+        }
+
+        public void TriggerDeleteQuiz()
+        {
+            DeleteQuiz.InvokeAsync(Quiz.Id);
+            Modal.CloseModal();
+        }
+
+        public void CloseModal()
+        {
+            Modal.CloseModal();
         }
     }
 }

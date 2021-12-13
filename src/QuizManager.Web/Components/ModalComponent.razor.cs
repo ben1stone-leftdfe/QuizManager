@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace QuizManager.Web.Components
 {
@@ -26,18 +25,16 @@ namespace QuizManager.Web.Components
             Errors = errors;
         }
 
-        public async Task OpenModal()
+        public void OpenModal()
         {
             Display = "block;";
-            await Task.Delay(100);
             Class = "show";
             StateHasChanged();
         }
 
-        public async Task CloseModal()
+        public void CloseModal()
         {
             Class = "";
-            await Task.Delay(250);
             Display = "none;";
             StateHasChanged();
         }

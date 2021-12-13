@@ -18,7 +18,6 @@ namespace QuizManager.Web.Models.Editor
 
         public List<Answer> Answers { get; set; }
 
-
         public bool Editing = false;
         public bool ContainsErrors = false;
 
@@ -36,7 +35,7 @@ namespace QuizManager.Web.Models.Editor
             Id = dto.Id;
             QuestionNumber = dto.QuestionNumber;
             QuestionText = dto.QuestionText;
-            Answers = dto.Answers.Select(a => new Answer(a)).ToList();
+            Answers = dto.Answers.Select(a => new Answer(a)).OrderBy(a => a.AnswerNumber.Number).ToList();
         }
 
         public void AddStartingAnswers()

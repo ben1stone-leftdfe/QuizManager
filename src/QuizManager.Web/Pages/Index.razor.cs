@@ -7,7 +7,6 @@ using QuizManager.Web.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace QuizManager.Web.Pages
@@ -26,13 +25,9 @@ namespace QuizManager.Web.Pages
         [CascadingParameter]
         public MainLayout Layout { get; set; }
 
-        public List<QuizOverviewDto> Quizzes { get; set; } = new List<QuizOverviewDto>();
+        public List<QuizOverviewDto> Quizzes { get; set; }
 
-        public string UserRole { get; set; }
-        public Guid UserId { get; set; }
-
-
-        
+        private bool quizzesLoaded = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -40,19 +35,25 @@ namespace QuizManager.Web.Pages
 
             var auth = await AuthenticationStateProvider.GetAuthenticationStateAsync();
 
-            if (auth.User.Identity.IsAuthenticated == false)
+            Layout.SetUserData(auth);
+
+            if (auth.User.Identity.IsAuthenticated == true)
+            {
+                // Imaginary API call to get organisation data 
+
+                // Pass organisation data back to the layout to show theme on each page
+                Layout.SetOrganisationData("BCS", "/logos/bcs-logo.png", "British Computer Society");
+
+                var response = await QuizService.GetQuizzes(Layout.OrganisationId);
+
+                Quizzes = response.Quizzes.ToList();
+                quizzesLoaded = true;
+            }
+            else
             {
                 NavigationManager.NavigateTo("/login");
             }
 
-            UserRole = GetUserRole(auth);
-            UserId = Guid.Parse(auth.User.FindFirst(c => c.Type.Contains("nameidentifier"))?.Value);
-
-            var orgId = auth.User.Claims.Where(c => c.Type == ClaimTypes.Country).Select(c => c.Value).SingleOrDefault();
-
-            var response = await QuizService.GetQuizzes(Guid.Parse(orgId));
-
-            Quizzes = response.Quizzes.ToList();
         }
 
         public async Task DeleteQuiz(Guid quizId)
@@ -60,7 +61,7 @@ namespace QuizManager.Web.Pages
             var command = new DeleteQuizCommand
             {
                 Id = quizId,
-                UserId = UserId
+                UserId = Layout.UserId
             };
 
             var result = await QuizService.DeleteQuiz(command);
@@ -77,20 +78,5 @@ namespace QuizManager.Web.Pages
 
             Quizzes.Remove(quizToRemove);
         }
-
-        private string GetUserRole(AuthenticationState auth)
-        {
-            if (auth.User.IsInRole("Editor"))
-            {
-                return "Editor";
-            }
-            else if (auth.User.IsInRole("Viewer"))
-            {
-                return "Viewer";
-            }
-
-            return "Restricted";
-        }
-
     }
 }

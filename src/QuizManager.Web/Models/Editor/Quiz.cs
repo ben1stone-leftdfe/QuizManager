@@ -11,8 +11,6 @@ namespace QuizManager.Web.Models.Editor
         public string Title { get; }
         public string Description { get; }
 
-        public Guid Editing = Guid.Empty;
-
         public List<Question> Questions { get; }
 
         public Quiz(QuizDto dto)
@@ -20,7 +18,7 @@ namespace QuizManager.Web.Models.Editor
             Id = dto.Id;
             Title = dto.Title;
             Description = dto.Description;
-            Questions = dto.Questions.Select(q => new Question(q)).ToList();
+            Questions = dto.Questions.Select(q => new Question(q)).OrderBy(q => q.QuestionNumber).ToList();
         }
 
         public void AddQuestion()

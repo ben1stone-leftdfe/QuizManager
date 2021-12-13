@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuizManager.Infrastructure.Data;
 
-namespace QuizManager.Infrastructure.Migrations
+namespace QuizManager.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211210151015_added-qanda-numbers")]
-    partial class addedqandanumbers
+    [Migration("20211213091226_database-migration")]
+    partial class databasemigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,22 +50,22 @@ namespace QuizManager.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a95d6ca4-fd6b-4f7e-8aaf-7c1c425bc1c6",
-                            ConcurrencyStamp = "c0b1738e-8205-47d7-bbc9-477fd3b0c07e",
+                            Id = "429300b2-c70e-476f-b5b3-42b1b976aa0e",
+                            ConcurrencyStamp = "154fa02a-9334-40d1-a810-40b0fa0d801d",
                             Name = "Editor",
                             NormalizedName = "EDITOR"
                         },
                         new
                         {
-                            Id = "6d19479e-bae1-4a78-a7e6-f1d1e7b38417",
-                            ConcurrencyStamp = "e7566e51-9b95-4626-9310-87f6c0e269b6",
+                            Id = "fe1741a0-7ce4-4827-b54a-05df68407023",
+                            ConcurrencyStamp = "cde03c00-d8f4-4601-ad33-44f528fbb52a",
                             Name = "Viewer",
                             NormalizedName = "VIEWER"
                         },
                         new
                         {
-                            Id = "76bdcfda-61fe-43e1-bbb1-bb934e3041b6",
-                            ConcurrencyStamp = "ed495156-e3dd-44be-a8ba-4fe1f9d6f014",
+                            Id = "c0a9d502-9470-464f-bcfa-39589ac1249c",
+                            ConcurrencyStamp = "2110dbb4-1441-4952-ae39-6406d6079193",
                             Name = "Restricted",
                             NormalizedName = "RESTRICTED"
                         });
