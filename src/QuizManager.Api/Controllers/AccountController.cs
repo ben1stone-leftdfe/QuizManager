@@ -39,20 +39,17 @@ namespace QuizManager.Api.Controllers
             var user = new QuizManagerUser
             {
                 Email = userDto.EmailAddress,
-                UserName = userDto.EmailAddress,
-                OrganisationId = userDto.OrganisationId
+                UserName = userDto.EmailAddress
             };
 
             var result = await _userManager.CreateAsync(user, userDto.Password);
 
-            if (result.Succeeded == true)
+            if (result.Succeeded == false)
             {
-                await _userManager.AddToRoleAsync(user, userDto.Role);
-
-                return Ok(new RegistrationResponse { Success = true });
+                return StatusCode((int)HttpStatusCode.BadRequest, "Error registering account");
             }
 
-            return StatusCode((int)HttpStatusCode.BadRequest, "Error registering account");
+            return Ok(new { result.Succeeded });
         }
 
         [AllowAnonymous]
