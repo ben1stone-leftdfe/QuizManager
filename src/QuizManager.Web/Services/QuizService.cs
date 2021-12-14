@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuizManager.Web.Services
 {
-    public class QuizService // : IQuizService
+    public class QuizService 
     {
         private readonly HttpService _httpService;
 
