@@ -38,5 +38,11 @@ namespace QuizManager.Web.Services
             await _localStorage.RemoveItemAsync("authToken");
             ((AppAuthenticationStateProvider)_authStateProvider).NotifyLogout();
         }
+
+        public async Task<RegistrationResponse> Register(RegisterUserDto userToRegister)
+        {
+            return await _httpService.HttpPostAsync<RegistrationResponse>("account/register", userToRegister);
+
+        }
     }
 }

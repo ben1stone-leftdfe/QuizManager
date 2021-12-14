@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizManager.Types", "QuizMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizManager.Web.UnitTests", "QuizManager.Web.UnitTests\QuizManager.Web.UnitTests.csproj", "{E2274A1E-8D76-4A75-ACE9-D35B77F217CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizManager.IntegrationTests", "QuizManager.IntegrationTests\QuizManager.IntegrationTests.csproj", "{E4C173CF-2B0D-4817-99FF-FE40BD9A4FB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizManager.IntegrationTests", "QuizManager.IntegrationTests\QuizManager.IntegrationTests.csproj", "{E4C173CF-2B0D-4817-99FF-FE40BD9A4FB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
