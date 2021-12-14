@@ -6,6 +6,7 @@ using QuizManager.Types.Quiz.Models;
 using QuizManager.Web.Components;
 using QuizManager.Web.Interfaces;
 using QuizManager.Web.Models.Editor;
+using QuizManager.Web.Services;
 using QuizManager.Web.Shared;
 using QuizManager.Web.Validation;
 using System;
@@ -30,7 +31,7 @@ namespace QuizManager.Web.Pages
         public NavigationManager NavigationManager { get; set; }
 
         [Inject]
-        public IQuizService QuizService { get; set; }
+        public QuizService QuizService { get; set; }
 
         [Inject]
         public QuestionValidator QuestionValidator { get; set; }

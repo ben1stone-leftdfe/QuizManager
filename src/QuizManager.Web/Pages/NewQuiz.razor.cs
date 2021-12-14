@@ -22,7 +22,7 @@ namespace QuizManager.Web.Pages
         public NavigationManager NavigationManager { get; set; }
 
         [Inject]
-        public IQuizService QuizService { get; set; }
+        public QuizService QuizService { get; set; }
 
         [CascadingParameter]
         public MainLayout Layout { get; set; }

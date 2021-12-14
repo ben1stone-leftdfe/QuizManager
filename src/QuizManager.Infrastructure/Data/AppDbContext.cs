@@ -18,6 +18,7 @@ namespace QuizManager.Infrastructure.Data
             base.OnModelCreating(builder);
 
             builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new OrganisationConfiguration());
         }
 
         public DbSet<Organisation> Organisations { get; set; }

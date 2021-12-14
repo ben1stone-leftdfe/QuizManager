@@ -230,17 +230,17 @@ namespace QuizManager.Infrastructure.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "429300b2-c70e-476f-b5b3-42b1b976aa0e", "154fa02a-9334-40d1-a810-40b0fa0d801d", "Editor", "EDITOR" });
+                values: new object[,]
+                {
+                    { "c3b33c4d-d4bf-4824-8af9-4bd0aa435722", "2826fc61-14c0-4480-a4a9-94b54035b3bd", "Editor", "EDITOR" },
+                    { "82d49983-7838-40f3-909c-e7211e51dd64", "02a0568f-6ef0-41ab-b3f0-b6fdc5e1192b", "Viewer", "VIEWER" },
+                    { "0b7095a8-be0a-48d9-a6cf-9837ec7b37a9", "4e3a3f38-fadd-4433-b216-19c1c0dfe8ac", "Restricted", "RESTRICTED" }
+                });
 
             migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "fe1741a0-7ce4-4827-b54a-05df68407023", "cde03c00-d8f4-4601-ad33-44f528fbb52a", "Viewer", "VIEWER" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "c0a9d502-9470-464f-bcfa-39589ac1249c", "2110dbb4-1441-4952-ae39-6406d6079193", "Restricted", "RESTRICTED" });
+                table: "Organisations",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { new Guid("a9ef2e49-5a6a-4c86-9d2a-719b5703895a"), "Organisation name" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Answers_QuestionId",

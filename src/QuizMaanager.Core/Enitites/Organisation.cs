@@ -1,4 +1,5 @@
 ﻿using QuizManager.SharedKernel;
+using System;
 using System.Collections.Generic;
 
 namespace QuizManager.Core.Enitites
