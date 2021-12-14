@@ -30,7 +30,7 @@
             <EditForm id="QuizForm" Model="Quiz" OnSubmit="HandleSaveQuiz">
                 @foreach (var question in Quiz.Questions.OrderBy(q => q.QuestionNumber))
                 {
-                    <div class="card @(question.Editing && !question.ContainsErrors ? "border-dark" : "") @(question.ContainsErrors ? "border-danger" : "")">
+                    <div class="card question-card @(question.Editing && !question.ContainsErrors ? "border-dark" : "") @(question.ContainsErrors ? "border-danger" : "")">
                         <div class="card-header">
                             <div style="display:flex">
                                 <div class="align-middle" style="padding-right:5px">
@@ -45,7 +45,7 @@
 
                                     @if (Layout.UserRole == UserRoles.Editor)
                                     {
-                                        <div class="btn-group">
+                                        <div class="btn-group" id="edit-question-group">
                                             <div class="btn btn-sm btn-secondary" @onclick="() => StartEditQuestion(question)" style="cursor:pointer"> <span class="oi oi-pencil align-middle"></span> </div>
                                             <div class="btn btn-sm btn-danger" @onclick="() => DeleteQuestion(question)" style="cursor:pointer"> <span class="oi oi-trash align-middle"></span> </div>
                                         </div>

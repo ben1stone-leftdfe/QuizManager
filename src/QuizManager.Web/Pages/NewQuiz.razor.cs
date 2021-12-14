@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using QuizManager.Shared;
 using QuizManager.Types.Quiz.Commands;
 using QuizManager.Types.Quiz.Models;
+using QuizManager.Web.Interfaces;
 using QuizManager.Web.Services;
 using QuizManager.Web.Shared;
 using System;
@@ -21,7 +22,7 @@ namespace QuizManager.Web.Pages
         public NavigationManager NavigationManager { get; set; }
 
         [Inject]
-        public QuizService QuizService { get; set; }
+        public IQuizService QuizService { get; set; }
 
         [CascadingParameter]
         public MainLayout Layout { get; set; }

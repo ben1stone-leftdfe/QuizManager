@@ -42,7 +42,5 @@ namespace QuizManager.Web.UnitTests.Models
             _question.Answers[1].AnswerNumber.Number.Should().Be(2);
             _question.Answers[1].AnswerNumber.Letter.Should().Be("B");
         }
-
-        
     }
 }

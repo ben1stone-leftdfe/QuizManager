@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using QuizManager.Types.Quiz.Commands;
 using QuizManager.Types.Quiz.Models;
-using QuizManager.Web.Services;
+using QuizManager.Web.Interfaces;
 using QuizManager.Web.Shared;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace QuizManager.Web.Pages
         public NavigationManager NavigationManager { get; set; }
 
         [Inject]
-        public QuizService QuizService { get; set; }
+        public IQuizService QuizService { get; set; }
 
         [CascadingParameter]
         public MainLayout Layout { get; set; }
@@ -34,8 +34,6 @@ namespace QuizManager.Web.Pages
             Layout.ShowNavbar(true);
 
             var auth = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-
-            
 
             if (auth.User.Identity.IsAuthenticated == true)
             {

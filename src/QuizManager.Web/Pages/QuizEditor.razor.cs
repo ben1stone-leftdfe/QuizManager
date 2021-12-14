@@ -4,14 +4,13 @@ using Microsoft.AspNetCore.Components.Authorization;
 using QuizManager.Types.Quiz.Commands;
 using QuizManager.Types.Quiz.Models;
 using QuizManager.Web.Components;
+using QuizManager.Web.Interfaces;
 using QuizManager.Web.Models.Editor;
-using QuizManager.Web.Services;
 using QuizManager.Web.Shared;
 using QuizManager.Web.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace QuizManager.Web.Pages
@@ -31,7 +30,7 @@ namespace QuizManager.Web.Pages
         public NavigationManager NavigationManager { get; set; }
 
         [Inject]
-        public QuizService QuizService { get; set; }
+        public IQuizService QuizService { get; set; }
 
         [Inject]
         public QuestionValidator QuestionValidator { get; set; }
@@ -40,8 +39,6 @@ namespace QuizManager.Web.Pages
         public AnswerValidator AnswerValidator { get; set; }
 
         public Quiz Quiz { get; set; }
-        public string UserRole { get; set; }
-        public Guid UserId { get; set; }
 
         public List<string> Errors = new List<string>();
         public ModalComponent Modal { get; set; } = new ModalComponent();
